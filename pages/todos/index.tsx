@@ -8,11 +8,49 @@ import { db, auth } from "../../lib/firebase";
 import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
+/**
+ * TailwindCSSはクラス名を抽出して必要なもののみ抽出してCSSを作成する。
+ * 変数を使用したり、文字列の補完したりしていると抽出されない。
+ * そのため、このページでのみstatusListの各オブジェクトに使用するクラス名を格納する
+ * （連想配列で新規に作ってもよいが、その場合status.valueの値がキーとして存在するかのチェックが入るため、帰って複雑になる）
+ */
 const statusList = [
-  { value: "all", label: "すべて", color: "gray" },
-  { value: "no-yet", label: "未着手", color: "red" },
-  { value: "start", label: "着手", color: "orange" },
-  { value: "comp", label: "完了", color: "green" },
+  {
+    value: "all",
+    label: "すべて",
+    color: "gray",
+    bgColor: "bg-gray-500",
+    borderColor: "border-gray-500",
+    textColor: "text-gray-500",
+    hoverBgColor: "hover:bg-gray-500",
+  },
+  {
+    value: "no-yet",
+    label: "未着手",
+    color: "red",
+    bgColor: "bg-red-500",
+    borderColor: "border-red-500",
+    textColor: "text-red-500",
+    hoverBgColor: "hover:bg-red-500",
+  },
+  {
+    value: "start",
+    label: "着手",
+    color: "orange",
+    bgColor: "bg-orange-500",
+    borderColor: "border-orange-500",
+    textColor: "text-orange-500",
+    hoverBgColor: "hover:bg-orange-500",
+  },
+  {
+    value: "comp",
+    label: "完了",
+    color: "green",
+    bgColor: "bg-green-500",
+    borderColor: "border-green-500",
+    textColor: "text-green-500",
+    hoverBgColor: "hover:bg-green-500",
+  },
 ];
 
 const getStatusLabel = (value: string) => {
@@ -114,9 +152,10 @@ const Todos: React.FC = () => {
                 if (status.value != filter) {
                   return (
                     <button
-                      className={`bg-white border border-${status.color}-500 text-${status.color}-500 font-bold px-10 py-3 rounded-md flex flex-row justify-center items-center transition-all ease-in duration-150 hover:bg-${status.color}-500 hover:text-white`}
+                      className={`bg-white border ${status.borderColor} ${status.textColor} font-bold px-10 py-3 rounded-md flex flex-row justify-center items-center transition-all ease-in duration-150 ${status.hoverBgColor} hover:text-white`}
                       onClick={() => setFilter(status.value)}
                       key={status.value}
+                      style={{}}
                     >
                       {status.label}
                     </button>
@@ -124,7 +163,7 @@ const Todos: React.FC = () => {
                 } else {
                   return (
                     <button
-                      className={`bg-${status.color}-500 border border-${status.color}-500 text-white font-bold px-10 py-3 rounded-md flex flex-row justify-center items-center`}
+                      className={`${status.bgColor} border ${status.borderColor} text-white font-bold px-10 py-3 rounded-md flex flex-row justify-center items-center`}
                       onClick={() => setFilter(status.value)}
                       key={status.value}
                     >
