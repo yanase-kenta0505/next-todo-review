@@ -59,13 +59,13 @@ const TodoEdit: React.FC = () => {
       const changeTodo = {
         id: Number(todoId),
         uid: null,
-        title,
-        date,
-        detail,
-        status,
+        title: title,
+        date: date,
+        detail: detail,
+        status: status,
       };
       const newTodos = todos.map((todo) => {
-        if (todo.id === todoId) {
+        if (todo.id === Number(todoId)) {
           return changeTodo;
         } else {
           return todo;
@@ -83,7 +83,6 @@ const TodoEdit: React.FC = () => {
         const docRef = doc(db, "todos", String(todoId));
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          console.log("a");
           setFilterdTodo({
             id: docSnap.id,
             uid: docSnap.data().uid,
@@ -102,7 +101,6 @@ const TodoEdit: React.FC = () => {
 
   //filterdTodoの準備が完了したら、各フォーム用のステートをSETしていく
   useEffect(() => {
-    console.log(filterdTodo);
     if (filterdTodo) {
       setTitle(filterdTodo.title);
       setDate(filterdTodo.date);
@@ -127,7 +125,7 @@ const TodoEdit: React.FC = () => {
               </label>
               <input
                 type="text"
-                value={title}
+                value={title ? title : ""}
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 placeholder="タスク名を入力してください"
@@ -140,7 +138,7 @@ const TodoEdit: React.FC = () => {
               </label>
               <input
                 type="date"
-                value={date}
+                value={date ? date : ""}
                 required
                 onChange={(e) => setDate(e.target.value)}
                 className="block mb-2 p-2 text-gray-700 border border-solid border-gray-200 rounded-md flex-1 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -152,7 +150,7 @@ const TodoEdit: React.FC = () => {
               </label>
               <textarea
                 placeholder="詳細を入力してください"
-                value={detail}
+                value={detail ? detail : ""}
                 onChange={(e) => setDetail(e.target.value)}
                 className="h-40 block mb-2 p-2 text-gray-700 border border-solid border-gray-200 rounded-md flex-1 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -162,7 +160,7 @@ const TodoEdit: React.FC = () => {
                 ステータス
               </label>
               <select
-                value={status}
+                value={status ? status : ""}
                 onChange={(e) => setStatus(e.target.value)}
                 required
                 className="block mb-2 p-2 text-gray-700 border border-solid border-gray-200 rounded-md flex-1 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"

@@ -84,7 +84,6 @@ const Todos: React.FC = () => {
       setIsTodos(true);
     }
   }, [todos]);
-
   useEffect(() => {
     if (loading) {
       setTodos(storeTodos);
