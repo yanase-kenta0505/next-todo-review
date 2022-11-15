@@ -40,7 +40,7 @@ export const SignUp = () => {
       setPassword("");
       setUser(authUser.user);
     } catch (error) {
-      alert("正しく入力してください");
+      console.error(error)
     }
   };
 
